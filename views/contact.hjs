@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>CODE_MAZE</title>	
+		
+        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/style.css"> 
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/owl.carousel.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/owl.theme.css">
+		<script src="bower_components/bootstrap/dist/js/jquery-1.11.1.min.js"></script>			
+
+        <!-- spoljasnji link -->
+		<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+		<!-- spoljasnji link -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+		<!--Ucitavanje za message boxove-->
+		<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+		<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+		<script src="bower_components/jquery-cookie/jquery.cookie.js"></script>  
+        
+
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/modernizr.custom.js"></script>
+		<script src="bower_components/bootstrap/dist/js/grid.js"></script>		
+		<script src ="public/javascripts/Messages.js"></script>
+		<!--<script src="bower_components/jquery/dist/jquery.js"></script>-->
+		<link rel="stylesheet" href="public/stylesheets/style.css">
+		<style>
+
+		</style>
+
+		<script>	
+			
+
+			
+			
+		</script>
+    </head>  
+<body >
+
+	<div class="col-md-5"> <!-- Cemu sluzi ovaj div? mb -->
+		<div id="map"></div>
+	</div>
+	<!-- <div id="level" title="Nivo jedan">
+		<p><font face="Georgia" size="4">Prevuci komande i klikni na RUN!</font></p>
+	</div>	 -->		
+	<!-- <div id="tipsRun" title="Run button">
+		<p><font face="Georgia" size="4">Klikni dugme RUN za pokretanje!</font></p>
+	</div>
+	<div id="tipsDrag" title="Tips drag">
+		<p><font face="Georgia" size="4">Prevuci ovde komande!</font></p>
+	</div> -->
+		
+	<div class="container">
+		<span class="letterF">F</span><span class="numberFive">5</span>
+	</div>
+	
+		<nav class="container navbar navbar-custom" role="navigation">
+	<div class="container-fluid" style="background-color: #FFD175;>
+		<div class="navbar-collapse" id="bs-example-navbar-collapse-1" >
+			<div class=" navbar-header" style="background-color: #FFD175;>
+				<button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Touggle</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<ul class=" nav navbar-nav pull-right">
+				<li class="active"><a href="home" style="color: #2A9D22;">Home</a></li>
+				{{#nastavnik}}<li><a href="adminStrana" style="color: red;">Create level</a></li>{{/nastavnik}}
+				{{#nastavnik}}<li><a href="listaUcenika">Students</a></li>{{/nastavnik}}
+				{{#admin}}<li><a href="korisnici">Users</a></li>{{/admin}}
+				<li><a href="contact" style="color: #2A9D22;">Contact us</a></li>
+				<li><a href="help" style="color: #2A9D22;">Help</a></li>					
+				{{#username}}    		
+				<li>
+					<div class=" hiUser menu">
+					    <ul class="btn btn-primary clearfix" style="background-color:#66C2FF; border: 1px solid orange;">		        
+					        <li>
+					            <a href="#">Hi {{username}} <span class="arrow">&#9660;</span></a>
+					            <ul class="sub-menu ">
+					                <li class="btn btn-primary"><a href="logout">Logout</a></li>                
+					            </ul>
+					        </li>		        
+					    </ul>
+					</div>		
+				</li>
+			    {{/username}}		
+			</ul>			
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+	</nav>
+<!---Meni za izbor nivoa -->
+	<nav class="container navbar navbar-levels" role="navigation" style="background-color:#66C2FF;">
+	<div class="container-fluid levels">
+		<div class="navbar-collapse" id="bs-example-navbar-collapse-1" >
+			<div class=" navbar-header">
+				<button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Touggle</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<ul  id="meniZaIzborNivoa" style="color: green;" class="nav navbar-nav pull-left">
+				<!-- {{#brNivoa}}
+				<li><a href="#" onclick="engine.getLevel(1);">1</a></li>
+				<li><a href="#" onclick="engine.getLevel(2);">2</a></li>
+				<li><a href="#" onclick="engine.getLevel(3);">3</a></li>
+				<li><a style="color: grey;" href="#">4</a></li>
+				<li><a style="color: grey;" href="#">5</a></li>
+				<li><a style="color: grey;" href="#">6</a></li>				
+				{{/brNivoa}} -->
+			</ul>			
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+	</nav> 
+	<div class="container">
+	<img src="public/images/contact.png" alt="KONTAKTIRAJTE NAS" style="text-align:center;">
+	</div>	   
+	<div class="footer container-fluid">
+		<div class="container">
+			<div class="col-md-5">
+				<span><i>&copy;&nbsp;F5 2015</i></span>
+			</div>
+		<div class="col-md-3"></div>
+		<div class="col-md-4">
+			<ul class="list-unstyled">
+				<li><a href="privacypolicy">Privacy Policy</a></li>
+			</ul>
+		</div>
+		</div>
+	</div>        
+	<script>    
+	jQuery(document).ready(function() 
+	{
+		jQuery("#owl-example").owlCarousel({singleItem:true});
+	});
+	</script>
+</body>
+</html>

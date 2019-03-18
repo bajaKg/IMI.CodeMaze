@@ -1,0 +1,28 @@
+body{
+	background-color: black;
+}
+.meni{
+	position: absolute;
+	height: 50px;
+	top: 50px;
+	left: 0px;
+	width: 100%;
+	border: 1px solid blue;
+}
+
+.dugme{
+	position: absolute;
+	width: 100px;
+	height: 20px;
+	right: 20px;
+	border: 1px solid green;
+}
+
+.tabla{
+	position: absolute;
+	top: 140px;
+	height: 200px;
+	width: 200px;
+	border: 1px solid black;
+
+}

@@ -1,0 +1,239 @@
+.container .letterF
+{
+    color:#FFD175;
+    font-size: 60px;
+    font-weight:bold;
+    text-transform: uppercase;
+
+}
+.container .numberFive
+{
+    color:#66C2FF;
+    font-size: 60px;
+    font-weight:bold;
+    text-transform: uppercase;
+}
+.navbar-custom {
+    background-color:#F2B31D;
+    color:#ffffff;
+    border-radius:0;
+}
+.navbar-levels
+{
+    background-color:#F2B31D;
+    color:#F2B31D;
+    border-radius:5px;
+}
+.navbar-levels .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: white ;
+    color: #85CEFF;
+	font-weight:bold;
+	border-radius:10px;
+}
+.navbar-custom .navbar-nav > li > a:hover ,.navbar-custom .navbar-nav > .active > a:hover{
+color:blue;
+background-color:white;
+border-radius:10px; 
+border-left:2px solid #66c2ff;
+}
+.navbar-custom .navbar-nav > li > a {
+text-transform:uppercase;
+color:#66C2FF;
+}
+.tab-pane {
+margin-top: 35px;
+}
+.footer
+{
+    background-color: #FFD175;
+    margin-top:90px;
+    border-top:20px solid #66C2FF; /*solid oznacava punu liniju*/
+    padding-top: 20px;
+}
+
+
+.footer img
+{
+    margin-left: 30px;
+   
+}
+
+.footer span
+{
+    font-size: 30px;
+    color:#9966FF;
+    
+}
+.footer li
+{
+    text-transform: uppercase;
+    line-height: 35px;
+    border-right: 5px solid #66C2FF;
+    border-bottom: 3px solid #66C2FF;
+    margin: 20px;
+    border-radius: 25px;
+}
+.footer a
+{
+    color:#66C2FF;
+    text-decoration: none;
+    padding: 10px;
+}
+.footer li:hover
+{
+    color:white;
+    text-decoration: none;    
+    border-right: 5px solid white;
+    border-bottom: 3px solid white;
+	font-weight:bold;
+	font-size:16px;
+	letter-spacing:2px;
+}
+.footer a:hover
+{
+    color:white;
+}
+.footer p
+{
+    color:#9966FF;
+	line-height:25px;
+	font-weight:bold;
+	letter-spacing:2px;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 20px 0 10px 30px;
+}
+
+.formFooter2:hover
+{
+    background-color:#FFFFCC;
+	
+   
+}
+.formFooter
+{
+    opacity: 0.7; /*providnost slike, maksimum 1.0 moze da bude*/
+}
+
+.emailPart
+{
+    padding: 0 0 0 30px;
+}
+
+#radniprostor
+{
+padding:20px;
+border-bottom: 10px solid #66C2FF;
+border-left: 10px solid #66C2FF;
+border-right: 0px solid #66C2FF;
+border-bottom: 0px solid #66C2FF;
+border-radius:100%; /*border radius predstavlja zaobljenje ivica, moze i u pikselima da bude*/
+font-family: cursive;
+color: #66C2FF;
+font-weight: bold;
+}
+#komande
+{
+padding:20px;
+border-bottom: 10px solid #FFD175;
+border-left: 10px solid #FFD175;
+border-right: 0px solid #FFD175;
+border-bottom: 0px solid #FFD175;
+border-radius:100%;
+font-family: cursive;
+color: #FFD175;
+font-weight: bold;
+}
+#poligon img
+{
+width:100%;
+}
+.PoligonIKomande
+{
+height:450px;
+padding:10px;
+border-radius:30px;
+border-bottom:6px solid #66C2FF;
+border-right:6px solid #66C2FF;
+
+}
+#komande:hover,#kod:hover{
+font-weight: normal;
+}
+#radniprostor:hover
+{
+font-weight: normal;
+}
+.PoligonIKomande .btn
+{
+position:relative; 
+top:20px;
+margin-top:10px;
+width:70%;
+}
+.PoligonIKomande btn
+{
+position:relative;
+top:70px;
+left:50px;
+padding:10px;
+text-transform:uppercase;
+}
+.play
+{
+position:relative;
+top:130px;
+left:-470px;
+padding:10px;
+text-transform:uppercase;
+}
+
+.cometothefinish 
+{
+font-size:25px;
+color:#D11919;
+letter-spacing:2px;
+}
+.cometothefinish img
+{
+border-radius:30px;
+margin-right:10px;
+}
+.commandsModal{
+  margin-left: -40%;
+  margin-top: 45%;
+  width: 55%;
+}
+.dragModal{
+  margin-left: 0%;
+  margin-top: 35%;
+  width: 50%;
+}
+.runModal{
+margin-left: 10%;
+margin-top: 50%;
+width: 50%;
+}
+.fieldsModal{
+  margin-left: -40%;
+  margin-top: 50%;
+  width: 55%;
+}
+.navbar-brand, .navbar-nav>li>a {
+text-shadow: 0 1px 1px violet;
+color: aliceblue;
+font-weight: bold;
+font-size: 16px;
+border-radius:10px;
+}
+.activeLevel a{
+/*border: 3px solid;*/
+background-color: aliceblue;
+border-radius:10px;
+/*width:100%;*/
+}
+
+.oznaceno 
+{
+background-color:white; 
+}

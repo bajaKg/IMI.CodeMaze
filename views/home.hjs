@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>    	
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>IMI CODE MAZE</title>	
+		
+        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/style.css"> 
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/owl.carousel.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/owl.theme.css">
+		<script src="bower_components/bootstrap/dist/js/jquery-1.11.1.min.js"></script>
+
+
+		<!-- vvv dodatao iz starije verzije vvv -->
+		<!-- spoljasnji link -->
+		<!-- /*<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>*/ -->
+
+		<!-- spoljasnji link -->
+		<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> -->
+		<!-- ^^^ dodato iz starije verzije ^^^ -->
+
+		
+		<link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css">
+		
+
+		<!--Ucitavanje za message boxove-->
+		<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+		<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+		<script src="bower_components/jquery-cookie/jquery.cookie.js"></script>     
+        
+
+		
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/owl.carousel.js"></script>
+		<script src="bower_components/bootstrap/dist/js/modernizr.custom.js"></script>
+		<script src="bower_components/bootstrap/dist/js/grid.js"></script>
+		<script src="public/javascripts/phaser.js"></script>
+		<script src="public/javascripts/phaser.min.js"></script>
+
+		<script src="public/javascripts/dragAndDrop.js"></script>
+		<script src="public/javascripts/Blocks.settings.js"></script>
+		<script src="public/javascripts/Blocks.js"></script>
+		<script src="public/javascripts/languages/Blocks.javascript.js"></script>
+		<script src="public/javascripts/languages/Blocks.python.js"></script>
+        <script src="public/javascripts/languages/Blocks.php.js"></script>
+        <script src="public/javascripts/languages/Blocks.lua.js"></script>
+        <script src="public/javascripts/languages/Blocks.ruby.js"></script>
+        <script src="public/javascripts/languages/Blocks.coffeescript.js"></script>
+
+		<script src ="public/javascripts/Messages.js"></script>
+		<script src="public/javascripts/Engine.js"></script>
+		<script src="public/javascripts/MainCharacter.js"></script>
+		<script src="public/javascripts/CodeHighlighter.js"></script>
+		<script src="public/javascripts/demoAdmin.js"></script>		
+		<script src="public/javascripts/demo.js"></script>
+		
+		
+
+		
+		<script src="public/javascripts/Blocks.import-export.js"></script>
+		<!--<script src="bower_components/jquery/dist/jquery.js"></script>-->
+		<link rel="stylesheet" href="public/stylesheets/style.css">
+		<style>
+		.ui-resizable-handle.ui-resizable-s::before, .ui-resizable-handle.ui-resizable-s::after {
+			content: "";
+			width: 0;
+			height: 0;
+			position: absolute;
+			left: 150px;
+			border-style: solid;
+			border-width: 10px;	
+		}
+
+		.ui-resizable-handle.ui-resizable-s::before {
+			border-color: #aaa transparent transparent transparent;
+			top: 2px;
+		}
+
+		.ui-resizable-handle.ui-resizable-s::after {
+			border-color: #fff transparent transparent transparent;
+			top: 1px;
+		}
+
+		.ui-dialog {
+			overflow:visible;
+		}
+		.ui-widget {
+		font-size: 9px;
+		}
+		</style>
+
+	<script>	
+			//koristi se u "meniZaIzborNivoa"			
+			var contains = function(num, array){
+				for (var i = 0; i < array.length; i++) {
+					if(num == array[i]){
+						return true;
+					}
+				};
+				return false;
+			}
+			
+			var getLevel = function(level){
+			$('.navbar-levels #meniZaIzborNivoa li').removeClass('activeLevel');
+			var levelSelector = '.navbar-levels #meniZaIzborNivoa #'+(level-1)+'1';
+			//$(levelSelector).addClass('activeLevel');
+			engine.getLevel(level);
+			$(levelSelector).addClass('activeLevel');
+			messageBox.levelNumber = level;
+			// //$('#SuccessDialog').modal('hide');
+   //          document.getElementById("LevelText").innerHTML = "Level " + messageBox.levelNumber;
+             //$('#LevelDialog').modal('show');             
+   			{{^auth}}
+			messageBox.isNeedToLogin();			
+			{{/auth}}
+			{{#auth}}
+				$('#SuccessDialog').modal('hide');
+	            //document.getElementById("LevelText").innerHTML = "Level " + messageBox.levelNumber;
+	            //$('#LevelDialog').modal('show');	            
+			{{/auth}}
+			}
+
+			$("meniZaIzborNivoa").ready(function(){
+				var nivoi = "";					
+				var niz = [];				
+				for (var i = 0; i < {{brNivoa}}; i++) {
+					//rbr = i+1;
+					{{#auth}}											
+						niz = {{statusArray}};
+						console.log("Status array: "+niz);
+						if((niz!=null) && contains(i+1, niz)){
+							console.log("inside "+niz);
+							nivoi += "<li class='completed' id='"+i+1+"'>";
+						}			
+						else{
+							nivoi += "<li id='"+i+1+"'>";
+						}						
+						nivoi += "<a href='#' onclick='getLevel("+(i+1)+");'>"+(i+1)+"</a>";
+		    			nivoi += "</li>";
+			    	{{/auth}}						
+			    	{{^auth}}
+			    		if(i > 2){
+							nivoi += "<li class='locked' id='"+i+1+"'>";
+						}
+						else{
+							nivoi += "<li id='"+i+1+"'>";	
+						}	
+						nivoi += "<a href='#' onclick='getLevel("+(i+1)+");'>"+(i+1)+"</a>";
+			    		nivoi += "</li>";	
+					{{/auth}}			    	
+				};	
+				document.getElementById("meniZaIzborNivoa").innerHTML = nivoi;	
+			});
+			
+			
+			//MESSAGE BOXES
+			$(document).ready(function () {
+        		//poruka o nivou
+			    //$('#LevelDialog').modal('show'); 				
+				$('#levelOk').on('click', function () {
+				  messageBox.ok();
+				}); 
+				$('#fieldsOk').on('click', function () {
+				  messageBox.ok();
+				}); 
+				$('#commandsOk').on('click', function () {
+				  messageBox.ok();
+				}); 
+				$('#dragOk').on('click', function () {
+				  messageBox.ok();
+				}); 
+				$('#runOk').on('click', function () {
+				  messageBox.ok();
+				}); 
+
+				$('#CloseMsg').on('click', function () {
+				  messageBox.ok();
+				});
+				$('.navbar-levels #meniZaIzborNivoa #01').addClass('activeLevel');
+				$('#NextLevelInfo').on('click', function(){
+				  {{^auth}}	
+				var levelNum = messageBox.levelNumber;
+				var selectorNextLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+				if(!$(selectorNextLevel).next().hasClass('locked')){
+					var selecorOldLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+					var selecorNewLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum) + '1';
+					$(selecorOldLevel).removeClass('activeLevel');
+					$(selecorNewLevel).addClass('activeLevel');
+				  }
+				  else{
+					messageBox.levelNumber++;
+				  }
+				  messageBox.isNeedToLogin();
+				  {{/auth}}
+				  {{#auth}}
+					var levelNum = messageBox.levelNumber;
+					var selectorNextLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+					var selecorOldLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+					var selecorNewLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum) + '1';
+					$(selecorOldLevel).removeClass('activeLevel');			
+					$(selecorOldLevel).addClass('completed');	
+					$(selecorNewLevel).addClass('activeLevel');	  
+				  {{/auth}}
+				  engine.sendLevel();
+				  
+				  engine.resetLevel();				  
+				  engine.getLevel(messageBox.levelNumber +1);
+				});
+
+				$('#NextLevel').on('click', function () {				
+				  {{^auth}}	
+				var levelNum = messageBox.levelNumber;
+				var selectorNextLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+				if(!$(selectorNextLevel).next().hasClass('locked')){
+					var selecorOldLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+					var selecorNewLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum) + '1';
+					$(selecorOldLevel).removeClass('activeLevel');
+					$(selecorNewLevel).addClass('activeLevel');
+				  }
+				  else{
+					messageBox.levelNumber++;
+				  }
+				  messageBox.isNeedToLogin();
+				  {{/auth}}
+				  {{#auth}}
+					var levelNum = messageBox.levelNumber;
+					var selectorNextLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+					var selecorOldLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum-1) + '1';
+					var selecorNewLevel = '.navbar-levels #meniZaIzborNivoa #' + (levelNum) + '1';
+					$(selecorOldLevel).removeClass('activeLevel');			
+					$(selecorOldLevel).addClass('completed');	
+					$(selecorNewLevel).addClass('activeLevel');	  
+				  {{/auth}}
+				  engine.sendLevel();
+				  
+				  engine.resetLevel();				  
+				  engine.getLevel(messageBox.levelNumber +1);
+				});
+				$('#loginDialogYes').on('click', function(){
+					document.write(engine.getLogin());
+				});
+				$('#loginDialogNo').on('click', function(){
+					$('.navbar-levels #meniZaIzborNivoa li').removeClass('activeLevel');
+					$('.navbar-levels #meniZaIzborNivoa #01').addClass('activeLevel');	
+										
+					messageBox.levelNumber = 1;	
+					engine.resetLevel();				  
+					engine.getLevel(messageBox.levelNumber);					
+				});
+				$('#tryAgain').on('click', function(){
+					//nije potreban handler za try again					
+				});
+				$('#ResetGame').on('click', function () {
+					$('#ErrorDialog').modal('hide');
+
+					//metoda nije dobra
+					reset('textarea');
+				});      
+			});
+				
+		</script>
+    </head>  
+ <!-- <body style="background-image: url('public/images/angry-birds-.jpg');"> -->
+ <!-- <body> -->
+<body style="background-image: url('public/images/pig.jpg');">
+{{#auth}}
+
+{{/auth}}
+{{^auth}}
+<!-- <body style="background-image: url('public/images/yellow-angry-birds.jpg');"> -->
+{{/auth}}
+<!--
+    <div class="modal fade" id="LevelDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="con">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" id="CloseMsg"  aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="LevalTitle" style="color:#4DB8FF">LEVEL</h4>
+        </div>
+        <div class="modal-body" id="LevelText" style="color:#4DB8FF">
+            Level 1
+        </div>
+        <div class="modal-footer">
+            <button id="levelOk" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>           
+        </div>
+        </div>
+    </div>
+    </div>
+	-->
+	
+	<div class="modal fade" id="FieldsDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="con">
+        <div class="modal-content fieldsModal">
+        <div class="modal-header">
+            <button type="button" class="close" id="CloseMsg"  aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="FieldsTitle" style="color:#4DB8FF">Passable and impassable fields</h4>
+        </div>
+        <div class="modal-body" id="FieldsText">
+           <img src="public/images/box.png" alt="xxxxxx">
+        </div>
+        <div class="modal-footer">
+            <button id="fieldsOk" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>           
+        </div>
+        </div>
+    </div>
+    </div>
+	
+	<div class="modal fade" id="CommandsDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="con">
+        <div class="modal-content commandsModal">
+        <div class="modal-header">
+            <button type="button" class="close" id="CloseMsg"  aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="CommandsTitle" style="color:#4DB8FF">COMMANDS</h4>
+        </div>
+        <div class="modal-body" id="CommandsText">
+            <img src="public/images/box1.png" alt="x">
+        </div>
+        <div class="modal-footer">
+            <button id="commandsOk" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>           
+        </div>
+        </div>
+    </div>
+    </div>
+	
+	<div class="modal fade" id="DragDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="con">
+        <div class="modal-content dragModal">
+        <div class="modal-header">
+            <button type="button" class="close" id="CloseMsg"  aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="DragTitle" style="color:#FFB870">DRAG</h4>
+        </div>
+        <div class="modal-body" id="DragText">
+            <img src="public/images/box2.png" alt="x">
+        </div>
+        <div class="modal-footer">
+            <button id="dragOk" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>           
+        </div>
+        </div>
+    </div>
+    </div>
+	
+	<div class="modal fade" id="RunDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="con">
+        <div class="modal-content runModal">
+        <div class="modal-header">
+            <button type="button" class="close" id="CloseMsg"  aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="RunTitle" style="color:#4DB8FF">RUN</h4>
+        </div>
+        <div class="modal-body" id="runText">
+            <img src="public/images/box3.png" alt="x">
+        </div>
+        <div class="modal-footer">
+            <button id="runOk" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>           
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="modal fade" id="SuccessDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		            <h4 class="modal-title" id="SuccessLabel">Success</h4>
+		        </div>
+		        <div class="modal-body" id="MessageSuccess">
+		            Some text
+		        </div>
+		        <div class="modal-footer">		        	
+		            <button id="NextLevel" type="button" class="btn btn-primary" data-dismiss="modal">Next Level</button>
+		             <button id="Button1" type="button" onclick="engine.getLevel(1)" class="btn btn-primary" data-dismiss="modal">EXIT</button>
+		        </div>
+	        </div>
+	    </div>
+    </div>
+
+    <div class="modal fade" id="SuccessDialogInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		            <h4 class="modal-title" id="SuccessLabelInfo">Success</h4>
+		        </div>
+		        <div class="modal-body" id="MessageSuccessInfo">
+		            Some text
+		        </div>
+		        <div class="modal-footer">
+		        	<button onclick="engine.tryAgain();" type="button" class="btn btn-primary" data-dismiss="modal">TRY AGAIN</button> 
+		            <button id="NextLevelInfo" type="button" class="btn btn-primary" data-dismiss="modal">Next Level</button>
+		             <button id="Button1" type="button" onclick="engine.getLevel(1)" class="btn btn-primary" data-dismiss="modal">EXIT</button>
+		        </div>
+	        </div>
+	    </div>
+    </div>
+
+    <!--dialog za logovanje-->
+    <div class="modal fade" id="LoginDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="Login" style="color:#4DB8FF">LOGIN</h4>
+        </div>
+        <div class="modal-body" id="LoginText" style="color:#4DB8FF">
+            Do you want to login and continue playing?
+        </div>
+        <div class="modal-footer">        
+        	<button id="loginDialogYes" type="button" class="btn btn-primary" data-dismiss="modal">YES</button>
+        	<!-- <form action='/loginStrana' method='get'>
+            	<button id="loginDialogYes" type="submit" class="btn btn-primary" data-dismiss="modal">YES</button>
+            </form> -->
+             <button id="loginDialogNo" type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    
+    <!--dialog za greske-->
+    <div class="modal fade" id="ErrorDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="ErrorTitle">Greska</h4>
+        </div>
+        <div class="modal-body" id="ErrorMessage">
+         
+        </div>
+        <div class="modal-footer">
+	        <button id="reset" type="button" class="btn btn-primary" data-dismiss="modal">TRY AGAIN</button> 
+
+           <!--   <button id="reset" type="button" class="btn btn-primary" data-dismiss="modal">TRY AGIN</button>-->
+			   <!-- <button id="ResetGame" type="button" class="btn btn-primary">RESET</button>-->
+        </div>
+        </div>
+    </div>
+    </div>
+
+	<div class="col-md-5"> <!-- Cemu sluzi ovaj div? mb -->
+		<div id="map"></div>
+	</div>
+	<!-- <div id="level" title="Nivo jedan">
+		<p><font face="Georgia" size="4">Prevuci komande i klikni na RUN!</font></p>
+	</div>	 -->		
+	<!-- <div id="tipsRun" title="Run button">
+		<p><font face="Georgia" size="4">Klikni dugme RUN za pokretanje!</font></p>
+	</div>
+	<div id="tipsDrag" title="Tips drag">
+		<p><font face="Georgia" size="4">Prevuci ovde komande!</font></p>
+	</div> -->
+		
+		<div class="container">	
+		<img src="public/images/ab.gif" style="width:60px;height:60px;margin-bottom:30px;"><span class="letterF">F</span><span class="numberFive">5</span><br>
+		
+	</div>
+	<div class="container"><span style="margin-left:38%;color:#66C2FF;font-size:40px;font-weight:bold">Wel<span style="color:#FFD175">come</span></span></div>
+	
+
+	<nav class="container navbar navbar-custom" role="navigation">
+	<div class="container-fluid" style="background-color: #FFD175;>
+		<div class="navbar-collapse" id="bs-example-navbar-collapse-1" >
+			<div class=" navbar-header" style="background-color: #FFD175;>
+				<button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Touggle</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<ul class="nav navbar-nav pull-right">
+				<li class="active"><a href="home" class="oznaceno" style="color: #2A9D22;">Home</a></li>
+				{{#nastavnik}}<li><a href="adminStrana" style="color: red;">Create level</a></li>{{/nastavnik}}
+				{{#nastavnik}}<li><a href="listaUcenika">Students</a></li>{{/nastavnik}}
+				{{#admin}}<li><a href="korisnici">Users</a></li>{{/admin}}
+				{{^admin}}
+					<li><a href="contact" style="color: #2A9D22;">Contact us</a></li>
+					<li><a href="help" style="color: #2A9D22;">Help</a></li>
+				{{/admin}}
+				{{#auth}}    		
+				<li>
+				<div class=" hiUser menu">
+				    <ul class="btn btn-primary clearfix" style="background-color: #66C2FF; border: 1px solid #66C2FF;">		        
+				        <li>
+				            <a href="#">Hi {{username}} <span class="arrow">&#9660;</span></a>
+				            <ul class="sub-menu ">
+				                <li class="btn btn-primary"><a href="logout">Logout</a></li>                
+				            </ul>
+				        </li>		        
+				    </ul>
+				</div>									    
+		    	</li>
+		    	{{/auth}}
+		    	{{^auth}}
+		    	<li>
+		    		<div class=" hiUser menu">
+				    <ul class="btn btn-primary clearfix" style="background-color: #66C2FF; border: 1px solid #66C2FF;">		        
+				        <li>
+				            <form method="get" action="/loginStrana">
+						    	<button type="submit" id="login" type="button" class="btn btn-primary"> Log in</button>
+						    </form>
+				        </li>		        
+				    </ul>
+				</div>
+		    		
+				</li>
+		    	{{/auth}}
+			</ul>			
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+	</nav>
+<!---Meni za izbor nivoa -->
+	<nav class="container navbar navbar-levels" role="navigation" style="background-color:#66C2FF;">
+	<div class="container-fluid levels">
+		<div class="navbar-collapse" id="bs-example-navbar-collapse-1" >
+			<div class=" navbar-header">
+				<button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Touggle</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<ul  id="meniZaIzborNivoa" style="color: green;" class="nav navbar-nav pull-left">
+				<!-- {{#brNivoa}}
+				<li><a href="#" onclick="engine.getLevel(1);">1</a></li>
+				<li><a href="#" onclick="engine.getLevel(2);">2</a></li>
+				<li><a href="#" onclick="engine.getLevel(3);">3</a></li>
+				<li><a style="color: grey;" href="#">4</a></li>
+				<li><a style="color: grey;" href="#">5</a></li>
+				<li><a style="color: grey;" href="#">6</a></li>				
+				{{/brNivoa}} -->
+			</ul>			
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+	</nav> 
+	<div class="container">
+		<!-- <div style="border: 1px solid green; width: 100%; height: 50px;"></div>
+		<div style="position: absolute; top: 100px;
+		border: 1px solid black; height: 320px; width: 450px;" id="kontejnerZaPoligon">
+		</div> -->
+		<div id="rbrPoligona">
+			
+		</div>
+		<div id="poligon" class="col-md-4">
+			<!-- <div id="owl-example" class="owl-carousel">
+			<img src="images/slide1.jpg">
+			<img src="images/slide2.jpg">
+			<img src="images/slide3.jpg">
+			<img src="images/slide4.jpg">
+			<img src="images/slide5.jpg">
+			</div> -->
+		</div>
+		<!-- Izbacio sam privremeno ove dugmice jer im nije ispravno podesena funkcionalnost. (demo.js iscrtava svoje dugmice(komande)) bajic -->
+		<!-- <div  class="PoligonIKomande col-md-2" style="visibility: ;"><span id="komande">KOMANDE</span>
+			<button type="button" style="visibility: hidden;" class="btn btn-danger" onclick="js/demo.okretLevo();">okreniSeLevo</button> 
+			<button type="button" class="btn btn-success" style="visibility: hidden;"onclick="demo.okretDesno();" >okreniSeDesno</button> 
+			<button type="button"  class="btn btn-default" style="visibility: hidden;"onclick="js/demo.idiNapred();">idiNapred</button> 
+		</div> -->
+		
+		<div class="PoligonIKomande col-md-2">
+			<span id="komande">COMMANDS</span>
+	        <div class="tab-pane active" id="workspace-holder">
+				<ul id="toolbox">
+					<li block-type="goForward">goForward</li>
+					<li block-type="turnRight">turnRight</li>
+					<li block-type="turnLeft">turnLeft</li>
+                    <li block-type="isField">isField</li>
+					<li block-type="repeat">for</li>
+					<li block-type="loop">loop</li>					
+				</ul>
+			</div>
+		</div>
+		<!-- WORKSPACE -->
+		<div  class="PoligonIKomande col-md-3" style="visibility: ;">
+			<span id="radniprostor">WORKSPACE</span>
+			<ul id="workspace">
+			</ul>
+		</div>
+		<!-- SHOW_CODE -->
+				<div  class="PoligonIKomande col-md-3" style="visibility: ;">
+			<span id="radniprostor" style="color:#FFD175;border-color:#FFD175">SHOW CODE</span>
+			<ul id="code">
+			</ul>
+		</div>
+		
+    <div class="col-md-4">
+		<button style="position: relative; width: 95px; left:100px ; top: -100px; height:50px;" id="run" class="btn btn-danger"><span class="glyphicon glyphicon-play"></span> Run</button>
+		<button style="position: relative;width: 95px; top: -100px;height:50px; background:orange;" id="stop" onclick="engine.stop();" class="btn btn-danger"><span class="glyphicon glyphicon-stop"></span> Stop</button>
+		<button style="position: relative; left:-100px ; top: -100px;width: 95px; height:50px; background:#66C2FF;" id="resume" onclick="engine.resume();" class="btn btn-danger"><span class="glyphicon glyphicon-play"></span> Resume</button>
+		<button style="position: absolute; left:115px ; top: -48px;width: 95px; height:50px; background:#66C2FF;" id="btnReset" onclick="engine.tryAgain();" class="btn btn-danger"><span class="glyphicon glyphicon-repeat"></span> Replay</button>
+    </div>
+        
+		
+	<div class="col-md-2 trash glyphicon glyphicon-trash"></div>
+    <div class="col-md-3">
+		<button style="background:red; width: 95px; height:60px; border-radius: 25px;font-size:13px" id="resetShowCode" class="btn btn-danger"><span class="glyphicon glyphicon-refresh"></span> Reset <br> your code</button>
+    </div>
+    <div class="col-md-3">
+        <select id="language" class="form-control">
+            <option>javascript</option>
+            <option>python</option>
+            <option>php</option>
+            <option>lua</lua>
+            <option>ruby</lua>
+            <option>coffeescript</lua>
+        </select>
+    </div>
+	</div>
+		<div class="footer container-fluid">
+		<div class="container">
+			<div class="col-md-5">
+				<span><i>&copy;&nbsp;F5 2015</i></span>
+			</div>
+		<div class="col-md-3"></div>
+		<div class="col-md-4">
+			<ul class="list-unstyled">
+				<li><a href="privacypolicy">Privacy Policy</a></li>
+			</ul>
+		</div>
+		</div>
+	</div>      
+	<script>     
+	jQuery(document).ready(function() 
+	{
+		jQuery("#owl-example").owlCarousel({singleItem:true});
+	});
+	</script>
+</body>
+</html>
